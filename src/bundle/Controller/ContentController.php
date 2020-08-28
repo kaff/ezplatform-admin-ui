@@ -14,6 +14,7 @@ use eZ\Publish\API\Repository\PermissionResolver;
 use eZ\Publish\API\Repository\UserService;
 use eZ\Publish\API\Repository\Values\Content\Content;
 use eZ\Publish\API\Repository\Values\Content\Location;
+use eZ\Publish\API\Repository\Values\ContentType\ContentType;
 use eZ\Publish\API\Repository\Values\User\Limitation;
 use eZ\Publish\Core\Base\Exceptions\BadStateException;
 use eZ\Publish\Core\Helper\TranslationHelper;
@@ -148,9 +149,9 @@ class ContentController extends Controller
                     ]);
                 }
 
-                return $this->redirectToRoute('ezplatform.content.create_no_draft', [
+                return $this->redirectToRoute('ezplatform.content.create.proxy', [
                     'contentTypeIdentifier' => $contentType->identifier,
-                    'language' => $language->languageCode,
+                    'languageCode' => $language->languageCode,
                     'parentLocationId' => $parentLocation->id,
                 ]);
             });
@@ -161,6 +162,29 @@ class ContentController extends Controller
         }
 
         return $this->redirect($this->generateUrl('ezplatform.dashboard'));
+    }
+
+    public function createProxyAction(
+        ContentType $contentType,
+        string $languageCode,
+        int $parentLocationId
+    ): RedirectResponse {
+        $createContentTypeStuct = $this->contentService->newContentCreateStruct(
+            $contentType,
+            $languageCode
+        );
+
+        $contentDraft = $this->contentService->createContent(
+            $createContentTypeStuct,
+            [$this->locationService->newLocationCreateStruct($parentLocationId)],
+            []
+        );
+
+        return $this->redirectToRoute('ezplatform.content.draft.edit', [
+            'contentId' => $contentDraft->id,
+            'versionNo' => $contentDraft->getVersionInfo()->versionNo,
+            'language' => $languageCode,
+        ]);
     }
 
     /**

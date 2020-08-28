@@ -56,11 +56,6 @@
         <target state="new">Sign in</target>
         <note>key: authentication.sign_in</note>
       </trans-unit>
-      <trans-unit id="8785f4abdfdf72fe9001fe0553c6e3a582cfcc08" resname="authentication.submit">
-        <source>Login</source>
-        <target state="new">Login</target>
-        <note>key: authentication.submit</note>
-      </trans-unit>
       <trans-unit id="9143793289ea0e20c3dc9f752d43cc727f2dba01" resname="authentication.username">
         <source>Username</source>
         <target state="new">Username</target>
@@ -80,11 +75,6 @@
         <source>Need assistance or support?</source>
         <target state="new">Need assistance or support?</target>
         <note>key: base.need_assistance</note>
-      </trans-unit>
-      <trans-unit id="d51e30462e1babe35fd4fc6bcbbe6faf5e065b32" resname="base.platform_by_ibexa">
-        <source>platform by Ibexa</source>
-        <target state="new">platform by Ibexa</target>
-        <note>key: base.platform_by_ibexa</note>
       </trans-unit>
       <trans-unit id="b5305384fa0fd949ec756891f50f093fd26dd06c" resname="base.sign_in">
         <source>Sign in to IBEXA DXP</source>
@@ -151,6 +141,31 @@
         <target state="new">In Trash</target>
         <note>key: content.in_trash</note>
       </trans-unit>
+      <trans-unit id="59412354ccb004dfd8d1706f3cdf80b8bf0cd17f" resname="content_edit.autosave.failed.message">
+        <source>Autosave failed</source>
+        <target state="new">Autosave failed</target>
+        <note>key: content_edit.autosave.failed.message</note>
+      </trans-unit>
+      <trans-unit id="07b56fa9149c034a5b2f562d77e094e381618b22" resname="content_edit.autosave.message">
+        <source>Autosave is on.</source>
+        <target state="new">Autosave is on.</target>
+        <note>key: content_edit.autosave.message</note>
+      </trans-unit>
+      <trans-unit id="03c443069130cc7109d26c2da9d32a61244027c7" resname="content_edit.autosave.retry.message">
+        <source>please try to save manually.</source>
+        <target state="new">please try to save manually.</target>
+        <note>key: content_edit.autosave.retry.message</note>
+      </trans-unit>
+      <trans-unit id="981b80169382e4098ccd7589e5060c9d71cd4c96" resname="content_edit.autosave.saving.message">
+        <source>Saving...</source>
+        <target state="new">Saving...</target>
+        <note>key: content_edit.autosave.saving.message</note>
+      </trans-unit>
+      <trans-unit id="2eacfa88c4dede61a3c65a98dc06f8060f7f09fc" resname="content_edit.autosave.turn_of.message">
+        <source>You can turn autosave off in your user settings</source>
+        <target state="new">You can turn autosave off in your user settings</target>
+        <note>key: content_edit.autosave.turn_of.message</note>
+      </trans-unit>
       <trans-unit id="5626938e64bdad8be0c090d0018c868960859d0a" resname="content_type.breadcrumb.view">
         <source>%identifier%</source>
         <target state="new">%identifier%</target>
@@ -186,11 +201,6 @@
         <target state="new"><![CDATA[Please contact your Administrator to request access to this content or modify your profile.<br/>Otherwise, go back to <a class="error-page__link" href="%dashboard%">dashboard</a> or <a class="error-page__link" href="%search%">search</a> for another Content item.]]></target>
         <note>key: error.page.403.actions</note>
       </trans-unit>
-      <trans-unit id="2532cb9ce6fdf46258c107f3d20888c506115ef6" resname="error.page.403.message">
-        <source><![CDATA[Error 403: you don't have permissions to access this page.<br/>Contact your Administrator to request access to this content.]]></source>
-        <target state="new"><![CDATA[Error 403: you don't have permissions to access this page.<br/>Contact your Administrator to request access to this content.]]></target>
-        <note>key: error.page.403.message</note>
-      </trans-unit>
       <trans-unit id="d0b5337e551b64f59973449bbdcf7914c2102a6c" resname="error.page.403.sub_title">
         <source>Not possible to retrieve or access this page.</source>
         <target state="new">Not possible to retrieve or access this page.</target>
@@ -210,11 +220,6 @@
         <source><![CDATA[The page you requested was not found.<br/> It might have been deleted or it is temporarily unavailable.]]></source>
         <target state="new"><![CDATA[The page you requested was not found.<br/> It might have been deleted or it is temporarily unavailable.]]></target>
         <note>key: error.page.404.message</note>
-      </trans-unit>
-      <trans-unit id="7596368af317fe78b955e2a3f63c7586900bcd76" resname="error.page.404.messagea">
-        <source>The page you requested was not found. It might have been deleted or it is temporarily unavailable.</source>
-        <target state="new">The page you requested was not found. It might have been deleted or it is temporarily unavailable.</target>
-        <note>key: error.page.404.messagea</note>
       </trans-unit>
       <trans-unit id="ffa7f20226d38a989f6c931264bd4cf485b435e6" resname="error.page.404.sub_title">
         <source>You probably weren't expecting to land here.</source>
@@ -348,11 +353,6 @@
         <source>From date - to date</source>
         <target state="new">From date - to date</target>
         <note>key: search.date.range</note>
-      </trans-unit>
-      <trans-unit id="03d6d5922fd2012e155e50306eaf98e2dfeb21c6" resname="search.section.any">
-        <source>Any section</source>
-        <target state="new">Any section</target>
-        <note>key: search.section.any</note>
       </trans-unit>
       <trans-unit id="9567771350aff93580f743089937b0c8fe31058e" resname="section.assign,content">
         <source>Assign Content</source>
