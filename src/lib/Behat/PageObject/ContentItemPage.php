@@ -61,7 +61,7 @@ class ContentItemPage extends Page
         $contentTypePicker->verifyVisibility();
         $contentTypePicker->select($contentType);
 
-        $contentUpdatePage = PageObjectFactory::createPage($this->context, ContentUpdateItemPage::PAGE_NAME, $contentType);
+        $contentUpdatePage = PageObjectFactory::createPage($this->context, ContentUpdateItemPage::PAGE_NAME, '');
         $contentUpdatePage->verifyIsLoaded();
 
         return $contentUpdatePage;
