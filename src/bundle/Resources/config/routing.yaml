@@ -540,7 +540,7 @@ ezplatform.content.create:
 ezplatform.content.create.proxy:
     path: /content/create/proxy/{contentTypeIdentifier}/{languageCode}/{parentLocationId}
     defaults:
-        _controller: 'EzSystems\EzPlatformAdminUiBundle\Controller\ContentController::createProxyAction'
+        _controller: 'EzSystems\EzPlatformAdminUiBundle\Controller\ContentController::proxyCreateAction'
     options:
         expose: true
 

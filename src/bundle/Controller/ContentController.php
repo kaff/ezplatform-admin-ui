@@ -20,6 +20,7 @@ use eZ\Publish\Core\Base\Exceptions\BadStateException;
 use eZ\Publish\Core\Helper\TranslationHelper;
 use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use eZ\Publish\SPI\Limitation\Target;
+use EzSystems\EzPlatformAdminUi\Event\ContentProxyCreateEvent;
 use EzSystems\EzPlatformAdminUi\Exception\InvalidArgumentException as AdminInvalidArgumentException;
 use EzSystems\EzPlatformAdminUi\Form\Data\Content\ContentVisibilityUpdateData;
 use EzSystems\EzPlatformAdminUi\Form\Data\Content\Draft\ContentCreateData;
@@ -46,6 +47,7 @@ use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 use Symfony\Component\Translation\Exception\InvalidArgumentException;
 use eZ\Publish\API\Repository\Exceptions\InvalidArgumentException as APIRepositoryInvalidArgumentException;
 use Symfony\Component\Translation\Exception\InvalidArgumentException as TranslationInvalidArgumentException;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class ContentController extends Controller
 {
@@ -88,6 +90,9 @@ class ContentController extends Controller
     /** @var \EzSystems\EzPlatformAdminUi\Siteaccess\SiteAccessNameGeneratorInterface */
     private $siteAccessNameGenerator;
 
+    /** @var \Symfony\Contracts\EventDispatcher\EventDispatcherInterface */
+    private $eventDispatcher;
+
     public function __construct(
         TranslatableNotificationHandlerInterface $notificationHandler,
         ContentService $contentService,
@@ -101,7 +106,8 @@ class ContentController extends Controller
         LookupLimitationsTransformer $lookupLimitationsTransformer,
         TranslationHelper $translationHelper,
         ConfigResolverInterface $configResolver,
-        SiteAccessNameGeneratorInterface $siteAccessNameGenerator
+        SiteAccessNameGeneratorInterface $siteAccessNameGenerator,
+        EventDispatcherInterface $eventDispatcher
     ) {
         $this->notificationHandler = $notificationHandler;
         $this->contentService = $contentService;
@@ -116,6 +122,7 @@ class ContentController extends Controller
         $this->lookupLimitationsTransformer = $lookupLimitationsTransformer;
         $this->configResolver = $configResolver;
         $this->siteAccessNameGenerator = $siteAccessNameGenerator;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -164,26 +171,29 @@ class ContentController extends Controller
         return $this->redirect($this->generateUrl('ezplatform.dashboard'));
     }
 
-    public function createProxyAction(
+    public function proxyCreateAction(
         ContentType $contentType,
         string $languageCode,
         int $parentLocationId
-    ): RedirectResponse {
-        $createContentTypeStuct = $this->contentService->newContentCreateStruct(
-            $contentType,
-            $languageCode
+    ): Response {
+        /** @var ContentProxyCreateEvent $event */
+        $event = $this->eventDispatcher->dispatch(
+            new ContentProxyCreateEvent(
+                $contentType,
+                $languageCode,
+                $parentLocationId
+            )
         );
 
-        $contentDraft = $this->contentService->createContent(
-            $createContentTypeStuct,
-            [$this->locationService->newLocationCreateStruct($parentLocationId)],
-            []
-        );
+        if ($event->hasResponse()) {
+            return $event->getResponse();
+        }
 
-        return $this->redirectToRoute('ezplatform.content.draft.edit', [
-            'contentId' => $contentDraft->id,
-            'versionNo' => $contentDraft->getVersionInfo()->versionNo,
+        // Fallback to "nodraft"
+        return $this->redirectToRoute('ezplatform.content.create_no_draft', [
+            'contentTypeIdentifier' => $contentType->identifier,
             'language' => $languageCode,
+            'parentLocationId' => $parentLocationId
         ]);
     }
 
